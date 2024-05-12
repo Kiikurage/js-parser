@@ -1,0 +1,169 @@
+{
+	"type": "InputElement",
+	"text": "x   y   z",
+	"children": [
+		{
+			"type": "InputElement",
+			"text": "x   y  ",
+			"children": [
+				{
+					"type": "InputElement",
+					"text": "x   y",
+					"children": [
+						{
+							"type": "InputElement",
+							"text": "x  ",
+							"children": [
+								{
+									"type": "InputElement",
+									"text": "x",
+									"children": [
+										{
+											"type": "InputElementDiv",
+											"text": "x",
+											"children": [
+												{
+													"type": "CommonToken",
+													"text": "x",
+													"children": [
+														{
+															"type": "IdentifierName",
+															"text": "x",
+															"children": [
+																{
+																	"type": "IdentifierStart",
+																	"text": "x",
+																	"children": [
+																		{
+																			"type": "IdentifierStartChar",
+																			"text": "x",
+																			"children": [
+																				{
+																					"type": {},
+																					"text": "x",
+																					"children": []
+																				}
+																			]
+																		}
+																	]
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"type": "InputElementDiv",
+									"text": " ",
+									"children": [
+										{
+											"type": "WhiteSpace",
+											"text": " ",
+											"children": [
+												{
+													"type": {},
+													"text": " ",
+													"children": []
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"type": "InputElementDiv",
+							"text": "y",
+							"children": [
+								{
+									"type": "CommonToken",
+									"text": "y",
+									"children": [
+										{
+											"type": "IdentifierName",
+											"text": "y",
+											"children": [
+												{
+													"type": "IdentifierStart",
+													"text": "y",
+													"children": [
+														{
+															"type": "IdentifierStartChar",
+															"text": "y",
+															"children": [
+																{
+																	"type": {},
+																	"text": "y",
+																	"children": []
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "InputElementDiv",
+					"text": " ",
+					"children": [
+						{
+							"type": "WhiteSpace",
+							"text": " ",
+							"children": [
+								{
+									"type": {},
+									"text": " ",
+									"children": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "InputElementDiv",
+			"text": "z",
+			"children": [
+				{
+					"type": "CommonToken",
+					"text": "z",
+					"children": [
+						{
+							"type": "IdentifierName",
+							"text": "z",
+							"children": [
+								{
+									"type": "IdentifierStart",
+									"text": "z",
+									"children": [
+										{
+											"type": "IdentifierStartChar",
+											"text": "z",
+											"children": [
+												{
+													"type": {},
+													"text": "z",
+													"children": []
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
