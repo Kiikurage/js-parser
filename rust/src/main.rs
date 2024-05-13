@@ -1,64 +1,74 @@
 use std::collections::{HashMap, HashSet};
 
-/*
- 未解決の疑問
- - strは構造体ではないのか? なぜ&strのように参照渡しするのか?
- */
-
-struct Entry {
-    current: String,
-    nexts: Vec<String>,
+struct Entry<'a> {
+    current: &'a str,
+    children: &'a Vec<&'a str>,
+    next_child_index: usize,
 }
 
 fn main() {
     let mut edges = HashMap::new();
+    edges.insert("A", vec!["B", "C"]);
+    edges.insert("B", vec!["D"]);
+    edges.insert("C", vec!["D"]);
+    edges.insert("D", vec!["E", "F"]);
+    edges.insert("E", vec!["A"]);
+    edges.insert("F", vec!["A"]);
 
-    edges.insert("A".to_string(), vec!["B".to_string(), "E".to_string()]);
-    edges.insert("B".to_string(), vec!["C".to_string(), "D".to_string()]);
-    edges.insert("C".to_string(), vec!["A".to_string()]);
-    edges.insert("D".to_string(), vec![]);
-    edges.insert("E".to_string(), vec!["B".to_string()]);
+    let cycles = find_cycles(&edges);
 
-    println!("edges = {edges:?}");
+    for cycle in cycles {
+        println!("{:?}", cycle.join("->"));
+    }
+}
 
+fn find_cycles<'a>(edges: &'a HashMap<&str, Vec<&str>>) -> Vec<Vec<&'a str>> {
     let mut completed = HashSet::new();
+    let mut visited = HashSet::new();
+    let mut cycles = Vec::new();
 
-    for (start, nexts) in edges.iter() {
-        if completed.contains(start) { continue }
-
-        let mut visited = HashSet::new();
+    for (&start, nexts) in edges {
         let mut stack = vec![Entry {
-            current: start.clone(),
-            nexts: nexts.clone(), // TODO: 非効率
+            current: start,
+            children: nexts,
+            next_child_index: 0,
         }];
 
-        while let Some(mut entry) = stack.pop() {
-            if !visited.contains(&entry.current) {
-                println!("Enter {}", &entry.current);
+        while let Some(entry) = stack.last_mut() {
+            visited.insert(entry.current);
 
-                visited.insert(entry.current.clone());
-                // print!("Enter {entry.current}"); // TODO: なぜだめ?
-            }
+            if entry.next_child_index < entry.children.len() {
+                let next = entry.children[entry.next_child_index];
+                entry.next_child_index += 1;
 
-            if let Some(next) = entry.nexts.pop() {
-                let current = entry.current.clone(); // TODO: 非効率
-                stack.push(entry);
-
-                if visited.contains(&next) {
-                    println!("Loop {} -> {next}", current);
+                if visited.contains(next) {
+                    let mut cycle = Vec::new();
+                    for entry in stack.iter().rev() {
+                        cycle.push(entry.current);
+                        if entry.current == next { break; }
+                    }
+                    cycles.push(cycle);
                 } else {
-                    // 次の子ノードへ
-                    stack.push(Entry {
-                        nexts: edges.get(&next).unwrap().clone(), // TODO: 非効率
-                        current: next,
-                    });
+                    match edges.get(next) {
+                        None => {
+                            completed.insert(next);
+                        }
+                        Some(children) => {
+                            stack.push(Entry {
+                                current: next,
+                                children,
+                                next_child_index: 0,
+                            })
+                        }
+                    }
                 }
             } else {
-                println!("Leave {}", &entry.current);
-
-                completed.insert(entry.current.clone());
-                visited.remove(&entry.current);
+                completed.insert(entry.current);
+                visited.remove(entry.current);
+                stack.pop();
             }
         }
     }
+
+    return cycles;
 }
